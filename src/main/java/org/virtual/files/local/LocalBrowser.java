@@ -5,7 +5,7 @@ import java.util.Collection;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import org.virtual.files.config.ServiceConfiguration;
+import org.virtual.files.config.LocalConfiguration;
 import org.virtualrepository.AssetType;
 import org.virtualrepository.spi.Browser;
 import org.virtualrepository.spi.MutableAsset;
@@ -14,7 +14,7 @@ import org.virtualrepository.spi.MutableAsset;
 public class LocalBrowser implements Browser {
 
 	@NonNull
-	ServiceConfiguration service;
+	LocalConfiguration service;
 	
 	@Override
 	public Iterable<? extends MutableAsset> discover(

@@ -11,7 +11,7 @@ import org.virtualrepository.impl.Type;
 import org.virtualrepository.spi.Importer;
 
 @RequiredArgsConstructor
-public class LocalReader implements Importer<CsvCodelist,InputStream> {
+public class LocalStreamReader implements Importer<CsvCodelist,InputStream> {
 
 	@NonNull
 	ServiceConfiguration service;

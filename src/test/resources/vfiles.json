@@ -3,10 +3,11 @@
 
   "services" : [
 
-  
     {
-      "name":"test"
-       
+     
+      "type": "local",
+      "name": "test",
+      "location": "src/test/resources"
     }     
       
     

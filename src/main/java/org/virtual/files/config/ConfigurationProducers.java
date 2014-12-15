@@ -3,6 +3,7 @@ package org.virtual.files.config;
 import static java.util.stream.Collectors.*;
 import static org.virtual.files.common.Constants.*;
 import static org.virtual.files.common.Utils.*;
+import static org.virtual.files.config.ProxyProvider.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +16,6 @@ import lombok.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.virtual.files.Proxy;
 import org.virtual.files.common.CommonProducers;
 import org.virtualrepository.RepositoryService;
 
@@ -31,7 +31,7 @@ public class ConfigurationProducers {
 		
 		return configuration.services().stream().map(
 		
-				$-> new RepositoryService($.name,new Proxy($)))
+				$-> new RepositoryService($.name,proxyFor($)))
 		
 		.collect(toList());
 	
