@@ -1,0 +1,14 @@
+{
+  "mode" : "development",
+
+  "services" : [
+
+  
+    {
+      "name":"test"
+       
+    }     
+      
+    
+     
+]}
