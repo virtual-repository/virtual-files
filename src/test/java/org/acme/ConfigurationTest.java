@@ -19,7 +19,7 @@ public class ConfigurationTest {
 				.mode(Configuration.Mode.development)
 				.services(asList(
 						
-						local("src/test/resources")
+						local("src/test/resources").add("prop", "val")
 						
 						));     
 		

@@ -5,6 +5,9 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.*;
 import static org.virtual.files.common.Constants.*;
 import static org.virtual.files.config.LocalConfiguration.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.namespace.QName;
 
 import lombok.Data;
@@ -26,6 +29,14 @@ public abstract class ServiceConfiguration {
 
 	@NonNull @JsonProperty
 	QName name;
+	
+	@NonNull @JsonProperty
+	Map<String,String> properties = new HashMap<>();
+	
+	public ServiceConfiguration add(String name, String val) {
+		properties.put(name,val);
+		return this;
+	}
 	
 	abstract String type();
 }

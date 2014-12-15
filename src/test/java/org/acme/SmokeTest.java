@@ -12,6 +12,8 @@ public class SmokeTest {
 		
 		Services repos = new Services();
 		repos.load();
+		
 		assertTrue(repos.size()>0);
+		assertFalse(repos.iterator().next().properties().isEmpty());
 	}
 }

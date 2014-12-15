@@ -17,6 +17,7 @@ import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.virtual.files.common.CommonProducers;
+import org.virtualrepository.Property;
 import org.virtualrepository.RepositoryService;
 
 import dagger.Module;
@@ -31,7 +32,10 @@ public class ConfigurationProducers {
 		
 		return configuration.services().stream().map(
 		
-				$-> new RepositoryService($.name,proxyFor($)))
+				$-> new RepositoryService($.name,
+										  proxyFor($),
+										  propertiesOf($).toArray(new Property[0])
+				))
 		
 		.collect(toList());
 	
@@ -80,5 +84,18 @@ public class ConfigurationProducers {
 		}
 	}
 
+	
+	/////////////////////////////////////////////////////////
+	
+	List<Property> propertiesOf(ServiceConfiguration configuration) {
+		
+		return configuration.properties().entrySet().stream().map(
+				
+				$ -> new Property($.getKey(), $.getValue())
+		
+		).collect(toList());
+		
+				
+	}
 	
 }

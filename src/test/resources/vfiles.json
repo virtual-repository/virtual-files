@@ -7,7 +7,12 @@
      
       "type": "local",
       "name": "test",
-      "location": "src/test/resources"
+      "location": "src/test/resources",
+      
+      "properties": { 
+          "prop" : "val"
+       }
+      
     }     
       
     
