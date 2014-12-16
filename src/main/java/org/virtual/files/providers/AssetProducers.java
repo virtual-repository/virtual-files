@@ -34,6 +34,7 @@ public class AssetProducers {
 			int codecol = code == null? 0 : valueOf(code);
 			
 			return new CsvCodelist(asset.name().toString(),asset.name().toString(),codecol);
+			
 		};
 	};
 	

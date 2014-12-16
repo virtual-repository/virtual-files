@@ -1,11 +1,13 @@
 package org.virtual.files;
 
 import static java.util.Arrays.*;
+import static org.virtual.files.common.Constants.*;
 import static org.virtual.files.providers.AssetProducers.*;
 
 import java.util.List;
 
 import org.virtual.files.providers.AssetProducer;
+import org.virtualrepository.Property;
 import org.virtualrepository.spi.MutableAsset;
 
 public class Assets {
@@ -25,9 +27,21 @@ public class Assets {
 		
 		for (AssetProducer<?> $ : producers)
 			if ($.handles(entry))
-				return $.transform(entry);
+				return resolvable(entry,$.transform(entry));
 		
 		throw new IllegalArgumentException("no producers exist for asset "+entry);
 	}
 
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////
+	
+	
+	static MutableAsset resolvable(AssetEntry entry,MutableAsset asset) {
+		
+		asset.properties().add(new Property(index_entry_property, entry,false));
+		
+		return asset;
+	}
+	
 }
