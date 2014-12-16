@@ -12,7 +12,7 @@ import org.virtualrepository.spi.MutableAsset;
 
 public class Assets {
 	
-	public static List<AssetProducer<?>> producers = asList(csvcodelistProducers);
+	public static List<AssetProducer<?>> producers = asList(csvcodelistProducer);
 
 	public static boolean handles(AssetEntry entry) {
 		
@@ -23,11 +23,11 @@ public class Assets {
 		return false;
 	}
 
-	public static MutableAsset assetFor(AssetEntry entry) {
+	public static MutableAsset assetFor(String id, AssetEntry entry) {
 		
 		for (AssetProducer<?> $ : producers)
 			if ($.handles(entry))
-				return resolvable(entry,$.transform(entry));
+				return resolvable(entry,$.transform(id,entry));
 		
 		throw new IllegalArgumentException("no producers exist for asset "+entry);
 	}

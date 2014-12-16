@@ -26,7 +26,7 @@ public class AssetEntry {
 	
 	@NonNull @JsonProperty
 	private String type;
-
+	
 	@JsonProperty
 	private Map<String,String> properties = new HashMap<String, String>();
 	

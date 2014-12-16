@@ -8,6 +8,6 @@ public interface AssetProducer<T  extends MutableAsset> {
 	
 	boolean handles(AssetEntry asset);
 	
-	T transform(AssetEntry asset); 
+	T transform(String id,AssetEntry asset); 
 	
 }

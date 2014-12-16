@@ -30,7 +30,9 @@ public abstract class BaseBrowser implements Browser {
 				try {
 					validate($);
 					
-					assets.add(assetFor($));
+					String id = index.id()+"-"+$.name().toString();
+					
+					assets.add(assetFor(id,$));
 				}
 				catch(Exception e) {
 					

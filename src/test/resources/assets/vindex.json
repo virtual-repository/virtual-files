@@ -1,5 +1,7 @@
 {
-  "assets" : [
+  
+   "id" : "local", 
+   "assets" : [
     {
       "name" : "somename",
       "type" : "csv/codelist",

@@ -37,7 +37,7 @@ public class ConfigurationTest {
 	@Test
 	public void assetsRoundTrip() {
 		
-		AssetIndex assets = group()
+		AssetIndex assets = index("someid")
 				.assets(new HashSet<>(asList(
 					
 						asset(new QName("file1"), CsvAsset.type.name(), "/some/path/file1.txt"),
