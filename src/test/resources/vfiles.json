@@ -7,11 +7,19 @@
      
       "type": "local",
       "name": "test",
-      "location": "src/test/resources",
+      "location": "src/test/resources/assets",
       
       "properties": { 
           "prop" : "val"
        }
+      
+    },
+    
+    {
+     
+      "type": "local",
+      "name": "testbads",
+      "location": "src/test/resources/asdfdsfsets"
       
     }     
       

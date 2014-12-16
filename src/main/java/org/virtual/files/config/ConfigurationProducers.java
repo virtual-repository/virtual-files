@@ -2,8 +2,6 @@ package org.virtual.files.config;
 
 import static java.util.stream.Collectors.*;
 import static org.virtual.files.common.Constants.*;
-import static org.virtual.files.common.Utils.*;
-import static org.virtual.files.config.ProxyProvider.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,10 +11,13 @@ import java.util.List;
 import javax.inject.Singleton;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.virtual.files.Proxies;
 import org.virtual.files.common.CommonProducers;
+import org.virtual.files.common.Utils;
 import org.virtualrepository.Property;
 import org.virtualrepository.RepositoryService;
 
@@ -24,20 +25,17 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(includes=CommonProducers.class, library=true)
+@Slf4j
 public class ConfigurationProducers {
 	
 	@Provides
 	@Singleton
 	List<RepositoryService> services(@NonNull Configuration configuration) {
 		
-		return configuration.services().stream().map(
-		
-				$-> new RepositoryService($.name,
-										  proxyFor($),
-										  propertiesOf($).toArray(new Property[0])
-				))
-		
-		.collect(toList());
+		return configuration.services().stream()
+									   .filter(this::isValid)
+									   .map(this::toRepositoryService)
+									   .collect(toList());
 	
 		
 	}
@@ -56,7 +54,7 @@ public class ConfigurationProducers {
 		
 		try {
 		
-			if (isValid(location)) {
+			if (Utils.isValid(location)) {
 				
 				log.info("loading configuration @ {}",path);
 					
@@ -87,7 +85,7 @@ public class ConfigurationProducers {
 	
 	/////////////////////////////////////////////////////////
 	
-	List<Property> propertiesOf(ServiceConfiguration configuration) {
+	private List<Property> propertiesOf(ServiceConfiguration configuration) {
 		
 		return configuration.properties().entrySet().stream().map(
 				
@@ -96,6 +94,26 @@ public class ConfigurationProducers {
 		).collect(toList());
 		
 				
+	}
+	
+	private boolean isValid(ServiceConfiguration $) {
+		
+		try {
+			$.validate();
+			log.info("validated configuration for service {}",$.name());
+			return true;
+		}
+		catch(Exception e ) {
+			log.error("invalid configuration for service {}: ignoring it ({})",$.name(),e.getMessage());
+			return false;
+		}
+	}
+	
+	private RepositoryService toRepositoryService(ServiceConfiguration $) {
+		
+		return new RepositoryService($.name(),
+				  Proxies.proxyFor($),
+				  propertiesOf($).toArray(new Property[0]));
 	}
 	
 }

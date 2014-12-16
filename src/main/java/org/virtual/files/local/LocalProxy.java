@@ -13,7 +13,6 @@ import org.virtualrepository.spi.ServiceProxy;
 
 public class LocalProxy implements ServiceProxy {
 
-	
 	@NonNull @Getter
 	LocalBrowser browser;
 	

@@ -8,6 +8,7 @@ public class Constants {
 	public static final String config_filename = "vfiles.json";
 	
 	public static final String type_discriminant_property = "type";
+	public static final String index_file_name = "vindex.json";
 	
 	
 	

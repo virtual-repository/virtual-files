@@ -1,9 +1,11 @@
-package org.virtual.files.config;
+package org.virtual.files;
 
+import org.virtual.files.config.LocalConfiguration;
+import org.virtual.files.config.ServiceConfiguration;
 import org.virtual.files.local.LocalProxy;
 import org.virtualrepository.spi.ServiceProxy;
 
-public class ProxyProvider {
+public class Proxies {
 
 	public static ServiceProxy proxyFor(ServiceConfiguration configuration) {
 		

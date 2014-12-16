@@ -28,15 +28,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class ServiceConfiguration {
 
 	@NonNull @JsonProperty
-	QName name;
+	private QName name;
 	
 	@NonNull @JsonProperty
-	Map<String,String> properties = new HashMap<>();
+	private Map<String,String> properties = new HashMap<>();
 	
 	public ServiceConfiguration add(String name, String val) {
 		properties.put(name,val);
 		return this;
 	}
 	
-	abstract String type();
+	public abstract String type();
+	public abstract void validate();
+	
 }

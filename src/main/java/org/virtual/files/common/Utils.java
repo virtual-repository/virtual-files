@@ -4,6 +4,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static java.net.URI.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.xml.namespace.QName;
 
+import org.virtual.files.AssetIndex;
 import org.virtualrepository.Properties;
 import org.virtualrepository.Property;
 
@@ -256,6 +258,19 @@ public class Utils {
 			return  toJson(o,false);
 			
 		}
+		
+		public static AssetIndex assetsFrom(InputStream stream) {
+		
+			try {
+				
+				return mapper.readValue(stream, AssetIndex.class);
+				
+			}
+			catch(Exception e) {
+				throw unchecked("invalid assets file", e);
+			}
+		}
+		
 		
 		public static ObjectNode toJson(Object o, boolean print) {
 			

@@ -19,9 +19,9 @@ public class Configuration {
 	public static enum Mode { development, production; }
 	
 	@JsonProperty
-	Mode mode = production;
+	private Mode mode = production;
 	
 	@NonNull @JsonProperty
-	List<ServiceConfiguration> services = new ArrayList<>();
+	private List<ServiceConfiguration> services = new ArrayList<>();
 	
 }

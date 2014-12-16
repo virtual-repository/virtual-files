@@ -1,0 +1,10 @@
+{
+  "assets" : [
+    {
+      "name" : "somename",
+      "type" : "csv/codelist",
+      "path" : "test.txt"
+    } 
+   ]
+   
+}
