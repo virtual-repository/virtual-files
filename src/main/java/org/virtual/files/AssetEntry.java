@@ -1,6 +1,7 @@
 package org.virtual.files;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -27,7 +28,7 @@ public class AssetEntry {
 	private String type;
 
 	@JsonProperty
-	private Map<String,String> properties;
+	private Map<String,String> properties = new HashMap<String, String>();
 	
 	@NonNull @JsonProperty
 	private String path;

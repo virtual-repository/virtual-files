@@ -9,6 +9,7 @@ import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
+import org.virtual.files.AssetEntry;
 import org.virtual.files.AssetIndex;
 import org.virtual.files.BaseBrowser;
 import org.virtual.files.common.Constants;
@@ -31,6 +32,13 @@ public class LocalBrowser extends BaseBrowser {
 		
 		index = assetsFrom(stream);
 
+	}
+	
+	@Override
+	protected void $validate(AssetEntry entry) {
+		
+		valid(new File(config.location(),entry.path()));
+	
 	}
 
 	@Override

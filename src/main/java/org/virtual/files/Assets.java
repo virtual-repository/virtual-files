@@ -1,33 +1,33 @@
 package org.virtual.files;
 
 import static java.util.Arrays.*;
-import static org.virtual.files.providers.AssetProviders.*;
+import static org.virtual.files.providers.AssetProducers.*;
 
 import java.util.List;
 
-import org.virtual.files.providers.AssetProvider;
+import org.virtual.files.providers.AssetProducer;
 import org.virtualrepository.spi.MutableAsset;
 
 public class Assets {
 	
-	public static List<AssetProvider<?>> providers = asList(csvcodelistProvider);
+	public static List<AssetProducer<?>> producers = asList(csvcodelistProducers);
 
-	public static boolean handles(AssetEntry asset) {
+	public static boolean handles(AssetEntry entry) {
 		
-		for (AssetProvider<?> provider : providers)
-			if (provider.handles(asset))
+		for (AssetProducer<?> $ : producers)
+			if ($.handles(entry))
 				return true;
 		
 		return false;
 	}
 
-	public static MutableAsset assetFor(AssetEntry asset) {
+	public static MutableAsset assetFor(AssetEntry entry) {
 		
-		for (AssetProvider<?> provider : providers)
-			if (provider.handles(asset))
-				return provider.transform(asset);
+		for (AssetProducer<?> $ : producers)
+			if ($.handles(entry))
+				return $.transform(entry);
 		
-		throw new IllegalArgumentException("cannot handle asset "+asset);
+		throw new IllegalArgumentException("no producers exist for asset "+entry);
 	}
 
 }

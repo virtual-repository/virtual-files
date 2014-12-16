@@ -1,9 +1,9 @@
 package org.virtual.files;
 
-import static java.util.stream.Collectors.*;
 import static org.virtual.files.AssetEntry.*;
 import static org.virtual.files.Assets.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,14 +21,22 @@ public abstract class BaseBrowser implements Browser {
 		
 		AssetIndex index = index();
 		
-		List<MutableAsset> assets = index.assets().stream()
-				
-				.filter($->isValid($))
-				.filter($->$.hasOneof(types))
-				.filter($->handles($))
-				.map($->assetFor($))
+		List<MutableAsset> assets = new ArrayList<>();
 		
-		.collect(toList());
+		for (AssetEntry $ : index.assets())
+			
+			if ($.hasOneof(types))
+				
+				try {
+					validate($);
+					
+					assets.add(assetFor($));
+				}
+				catch(Exception e) {
+					
+					log.warn("discarding invalid entry "+$,e);
+				}
+		
 		
 		log.info("{} discovered {} assets from an index of {}",this,assets.size(),index.assets().size());
 		
@@ -36,30 +44,21 @@ public abstract class BaseBrowser implements Browser {
 	}
 	
 	
-	boolean isValid(AssetEntry entry) {
+	void validate(AssetEntry entry) {
 		
-		try {
+		//basic validation is by cloning
+		asset(entry.name(), entry.type(), entry.path());
 			
-			//basic validation is by cloning
-			asset(entry.name(), entry.type(), entry.path());
+		//delegate to subclasses
+		$validate(entry);
 			
-			//delegate to subclasses
-			validate(entry);
-			
-			return true;
 		
-		}
-		catch(Exception e) {
-			
-			log.warn("discarding invalid entry {} ({})",entry,e.getMessage());
-			return false;
-		}
 		
 	}
 	
 	protected abstract AssetIndex index();
 	
-	protected void validate(AssetEntry entry){};
+	protected void $validate(AssetEntry entry){};
 	
 	
 	

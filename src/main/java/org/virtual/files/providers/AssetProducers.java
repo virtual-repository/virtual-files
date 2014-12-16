@@ -1,5 +1,6 @@
 package org.virtual.files.providers;
 
+import static java.lang.Integer.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -8,10 +9,11 @@ import org.virtualrepository.AssetType;
 import org.virtualrepository.csv.CsvCodelist;
 import org.virtualrepository.spi.MutableAsset;
 
-public class AssetProviders {
+//service-independent entry->asset transformers
+public class AssetProducers {
 	
 	@RequiredArgsConstructor
-	static abstract class BaseProvider<T extends MutableAsset>  implements AssetProvider<T> {
+	static abstract class BaseProducer<T extends MutableAsset>  implements AssetProducer<T> {
 		
 		@NonNull
 		final AssetType type;
@@ -23,11 +25,15 @@ public class AssetProviders {
 	}
 	
 	
-	public static AssetProvider<CsvCodelist> csvcodelistProvider = new BaseProvider<CsvCodelist>(CsvCodelist.type) {
+	public static AssetProducer<CsvCodelist> csvcodelistProducers = new BaseProducer<CsvCodelist>(CsvCodelist.type) {
 
 		public CsvCodelist transform(AssetEntry asset) {
 			
-			return new CsvCodelist(asset.name().toString(),asset.name().toString(),0);
+			String code = asset.properties().get("codeColumn");
+			
+			int codecol = code == null? 0 : valueOf(code);
+			
+			return new CsvCodelist(asset.name().toString(),asset.name().toString(),codecol);
 		};
 	};
 	

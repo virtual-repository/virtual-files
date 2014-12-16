@@ -1,11 +1,13 @@
 package org.virtual.files.config;
 
 import static java.util.stream.Collectors.*;
+import static org.virtual.files.Proxies.*;
 import static org.virtual.files.common.Constants.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -15,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.virtual.files.Proxies;
 import org.virtual.files.common.CommonProducers;
 import org.virtual.files.common.Utils;
 import org.virtualrepository.Property;
@@ -32,12 +33,27 @@ public class ConfigurationProducers {
 	@Singleton
 	List<RepositoryService> services(@NonNull Configuration configuration) {
 		
-		return configuration.services().stream()
-									   .filter(this::isValid)
-									   .map(this::toRepositoryService)
-									   .collect(toList());
-	
+		List<RepositoryService> services = new ArrayList<>();
 		
+		for (ServiceConfiguration $ : configuration.services())
+			try {
+				
+				$.validate();
+				
+				services.add(new RepositoryService($.name(),
+												  proxyFor($),
+												  propertiesOf($).toArray(new Property[0])));
+				
+		
+			}
+			catch(Exception e) {
+				
+				log.error("invalid configuration for service "+$.name()+": ignoring it (see cause)",e);
+				
+			}
+			
+		return services;
+
 	}
 
 	@Provides
@@ -94,26 +110,6 @@ public class ConfigurationProducers {
 		).collect(toList());
 		
 				
-	}
-	
-	private boolean isValid(ServiceConfiguration $) {
-		
-		try {
-			$.validate();
-			log.info("validated configuration for service {}",$.name());
-			return true;
-		}
-		catch(Exception e ) {
-			log.error("invalid configuration for service {}: ignoring it ({})",$.name(),e.getMessage());
-			return false;
-		}
-	}
-	
-	private RepositoryService toRepositoryService(ServiceConfiguration $) {
-		
-		return new RepositoryService($.name(),
-				  Proxies.proxyFor($),
-				  propertiesOf($).toArray(new Property[0]));
 	}
 	
 }

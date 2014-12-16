@@ -3,7 +3,10 @@
     {
       "name" : "somename",
       "type" : "csv/codelist",
-      "path" : "test.txt"
+      "path" : "csvcodelist.txt",
+      "properties" : {
+        "codeColumn":1
+      }
     } 
    ]
    

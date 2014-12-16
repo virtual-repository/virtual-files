@@ -13,15 +13,7 @@
           "prop" : "val"
        }
       
-    },
-    
-    {
-     
-      "type": "local",
-      "name": "testbads",
-      "location": "src/test/resources/asdfdsfsets"
-      
-    }     
+    }    
       
     
      
