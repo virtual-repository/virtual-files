@@ -1,7 +1,7 @@
 package org.virtual.files.config;
 
 import static java.util.stream.Collectors.*;
-import static org.virtual.files.Proxies.*;
+import static org.virtual.files.Providers.*;
 import static org.virtual.files.common.Constants.*;
 
 import java.io.File;
@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.virtual.files.BaseProxy;
+import org.virtual.files.Provider;
 import org.virtual.files.common.CommonProducers;
 import org.virtual.files.common.Utils;
 import org.virtualrepository.Property;
@@ -40,8 +42,12 @@ public class ConfigurationProducers {
 				
 				$.validate();
 				
+				Provider provider = providerFor($);
+				
+				BaseProxy proxy = new BaseProxy(provider);
+				
 				services.add(new RepositoryService($.name(),
-												  proxyFor($),
+												  proxy,
 												  propertiesOf($).toArray(new Property[0])));
 				
 		

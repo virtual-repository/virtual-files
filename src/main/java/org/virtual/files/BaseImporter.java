@@ -3,8 +3,6 @@ package org.virtual.files;
 import static org.virtual.files.common.Constants.*;
 
 import java.io.InputStream;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,31 +10,38 @@ import lombok.RequiredArgsConstructor;
 import org.virtualrepository.Asset;
 import org.virtualrepository.Properties;
 import org.virtualrepository.Property;
+import org.virtualrepository.impl.Type;
 import org.virtualrepository.spi.Importer;
 
 @RequiredArgsConstructor
-public abstract class BaseImporter<A extends Asset,T> implements Importer<A, T> {
+public class BaseImporter implements Importer<Asset, InputStream> {
 
 	//baseclasses know how/where to get the stream
 	@NonNull 
-	Function<AssetEntry,InputStream> provider;
-	
-	//transforms know how to parse it
-	@NonNull 
-	BiFunction<AssetEntry,InputStream,T> transform;
+	Provider provider;
 	
 	@Override
-	public T retrieve(A asset) throws Exception {
+	public InputStream retrieve(Asset asset) throws Exception {
 		
 		AssetEntry entry = entryIn(asset);
 		
-		return transform.apply(entry, provider.apply(entry));
+		return provider.resolve(entry);
 	}
 	
 	
+	@Override
+	public Type<? extends Asset> type() {
+		return Type.any;
+	}
+	
+	@Override
+	public Class<InputStream> api() {
+		return InputStream.class;
+	}
+	
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	AssetEntry entryIn(A asset) {
+	AssetEntry entryIn(Asset asset) {
 	
 		Properties props = asset.properties();
 		

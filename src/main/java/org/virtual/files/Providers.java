@@ -2,16 +2,16 @@ package org.virtual.files;
 
 import org.virtual.files.config.LocalConfiguration;
 import org.virtual.files.config.ServiceConfiguration;
-import org.virtual.files.local.LocalProxy;
-import org.virtualrepository.spi.ServiceProxy;
+import org.virtual.files.local.LocalProvider;
 
-public class Proxies {
+public class Providers {
 
-	public static ServiceProxy proxyFor(ServiceConfiguration configuration) {
+	public static Provider providerFor(ServiceConfiguration configuration) {
+		
 		
 		switch(configuration.type()) {
 		
-			case "local" : return new LocalProxy( (LocalConfiguration) configuration);
+			case "local" : return new LocalProvider( (LocalConfiguration) configuration);
 		
 			default: 
 				throw new IllegalArgumentException("unknown type "+configuration.type());

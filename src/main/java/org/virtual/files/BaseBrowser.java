@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.virtualrepository.AssetType;
@@ -14,12 +16,16 @@ import org.virtualrepository.spi.Browser;
 import org.virtualrepository.spi.MutableAsset;
 
 @Slf4j
-public abstract class BaseBrowser implements Browser {
-
+@RequiredArgsConstructor
+public class BaseBrowser implements Browser {
+	
+	@NonNull
+	Provider provider;
+	
 	@Override
 	public final Iterable<? extends MutableAsset> discover(Collection<? extends AssetType> types) throws Exception {
 		
-		AssetIndex index = index();
+		AssetIndex index = provider.index();
 		
 		List<MutableAsset> assets = new ArrayList<>();
 		
@@ -52,15 +58,11 @@ public abstract class BaseBrowser implements Browser {
 		asset(entry.name(), entry.type(), entry.path());
 			
 		//delegate to subclasses
-		$validate(entry);
+		provider.validate(entry);
 			
 		
 		
 	}
-	
-	protected abstract AssetIndex index();
-	
-	protected void $validate(AssetEntry entry){};
 	
 	
 	
