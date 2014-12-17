@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import java.io.InputStream;
 
+import lombok.SneakyThrows;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.virtualrepository.Asset;
 import org.virtualrepository.VirtualRepository;
@@ -24,7 +27,8 @@ public class ApiTest {
 		
 		assertTrue(repository.discover(CsvCodelist.type)>0);
 	}
-
+	
+	
 	@Test
 	public void browseAndRetrieveCsvAsset() {
 		
@@ -74,5 +78,18 @@ public class ApiTest {
 		
 		assertNotNull(repository.retrieve(a,InputStream.class));
 
+	}
+	
+	@Test @Ignore @SneakyThrows  //interactive 
+	public void localChangeDetection() {
+		
+		assertTrue(repository.discover(CometAsset.type)>0);
+		
+		for (;;) {
+			Thread.sleep(8000);
+			System.out.println();
+			repository.discover(CometAsset.type);
+
+		}
 	}
 }

@@ -66,6 +66,10 @@ public class BaseBrowser implements Browser {
 		
 	}
 	
+	@Override
+	public String toString() {
+		return provider.toString();
+	}
 	
 	
 }
