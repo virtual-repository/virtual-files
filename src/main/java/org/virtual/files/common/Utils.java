@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.xml.namespace.QName;
 
-import org.virtual.files.AssetIndex;
+import org.virtual.files.index.AssetIndex;
 import org.virtualrepository.Properties;
 import org.virtualrepository.Property;
 

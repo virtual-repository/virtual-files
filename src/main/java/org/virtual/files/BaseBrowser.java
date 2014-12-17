@@ -1,7 +1,7 @@
 package org.virtual.files;
 
-import static org.virtual.files.AssetEntry.*;
 import static org.virtual.files.Assets.*;
+import static org.virtual.files.index.AssetEntry.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +11,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.virtual.files.index.AssetEntry;
+import org.virtual.files.index.AssetIndex;
 import org.virtualrepository.AssetType;
 import org.virtualrepository.spi.Browser;
 import org.virtualrepository.spi.MutableAsset;

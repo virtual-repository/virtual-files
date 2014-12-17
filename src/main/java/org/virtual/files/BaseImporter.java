@@ -7,6 +7,7 @@ import java.io.InputStream;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import org.virtual.files.index.AssetEntry;
 import org.virtualrepository.Asset;
 import org.virtualrepository.Properties;
 import org.virtualrepository.Property;

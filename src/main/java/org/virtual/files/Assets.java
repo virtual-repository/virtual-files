@@ -2,17 +2,18 @@ package org.virtual.files;
 
 import static java.util.Arrays.*;
 import static org.virtual.files.common.Constants.*;
-import static org.virtual.files.providers.AssetProducers.*;
+import static org.virtual.files.producers.AssetProducers.*;
 
 import java.util.List;
 
-import org.virtual.files.providers.AssetProducer;
+import org.virtual.files.index.AssetEntry;
+import org.virtual.files.producers.AssetProducer;
 import org.virtualrepository.Property;
 import org.virtualrepository.spi.MutableAsset;
 
 public class Assets {
 	
-	public static List<AssetProducer<?>> producers = asList(csvcodelistProducer);
+	public static List<AssetProducer<?>> producers = asList(csvcodelistProducer,csvProducer,sdmxCodelistProducer,cometMappingProducer);
 
 	public static boolean handles(AssetEntry entry) {
 		

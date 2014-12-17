@@ -10,11 +10,11 @@ import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
-import org.virtual.files.AssetEntry;
-import org.virtual.files.AssetIndex;
 import org.virtual.files.Provider;
 import org.virtual.files.common.Constants;
 import org.virtual.files.config.LocalConfiguration;
+import org.virtual.files.index.AssetEntry;
+import org.virtual.files.index.AssetIndex;
 
 public class LocalProvider implements Provider {
 

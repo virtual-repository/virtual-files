@@ -1,6 +1,6 @@
-package org.virtual.files.providers;
+package org.virtual.files.producers;
 
-import org.virtual.files.AssetEntry;
+import org.virtual.files.index.AssetEntry;
 import org.virtualrepository.spi.MutableAsset;
 
 public interface AssetProducer<T  extends MutableAsset> {

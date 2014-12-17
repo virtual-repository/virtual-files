@@ -2,19 +2,19 @@ package org.acme;
 
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
-import static org.virtual.files.AssetIndex.*;
-import static org.virtual.files.AssetEntry.*;
 import static org.virtual.files.common.Utils.*;
 import static org.virtual.files.config.Configuration.*;
 import static org.virtual.files.config.LocalConfiguration.*;
+import static org.virtual.files.index.AssetEntry.*;
+import static org.virtual.files.index.AssetIndex.*;
 
 import java.util.HashSet;
 
 import javax.xml.namespace.QName;
 
 import org.junit.Test;
-import org.virtual.files.AssetIndex;
 import org.virtual.files.config.Configuration;
+import org.virtual.files.index.AssetIndex;
 import org.virtualrepository.csv.CsvAsset;
 
 public class ConfigurationTest {

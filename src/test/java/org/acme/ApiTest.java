@@ -7,8 +7,13 @@ import java.io.InputStream;
 import org.junit.Test;
 import org.virtualrepository.Asset;
 import org.virtualrepository.VirtualRepository;
+import org.virtualrepository.comet.CometAsset;
+import org.virtualrepository.csv.CsvAsset;
 import org.virtualrepository.csv.CsvCodelist;
 import org.virtualrepository.impl.Repository;
+import org.virtualrepository.sdmx.SdmxCodelist;
+import org.virtualrepository.tabular.Row;
+import org.virtualrepository.tabular.Table;
 
 public class ApiTest {
 
@@ -19,14 +24,55 @@ public class ApiTest {
 		
 		assertTrue(repository.discover(CsvCodelist.type)>0);
 	}
+
+	@Test
+	public void browseAndRetrieveCsvAsset() {
+		
+		repository.discover(CsvAsset.type);
+		
+		Asset a = repository.iterator().next();
+		
+		assertNotNull(repository.retrieve(a,InputStream.class));
+		
+		for (Row row : repository.retrieve(a,Table.class))
+			System.out.println(row);
+	}
 	
 	@Test
-	public void browseAndRetrieve() {
+	public void browseAndRetrieveCsvCodelist() {
 		
 		repository.discover(CsvCodelist.type);
 		
 		Asset a = repository.iterator().next();
 		
 		assertNotNull(repository.retrieve(a,InputStream.class));
+		assertNotNull(repository.retrieve(a,Table.class));
+		
+		
+		for (Row row : repository.retrieve(a,Table.class))
+			System.out.println(row);
+
+	}
+	
+	@Test
+	public void browseAndRetrieveSdmxCodelist() {
+		
+		repository.discover(SdmxCodelist.type);
+		
+		Asset a = repository.iterator().next();
+		
+		assertNotNull(repository.retrieve(a,InputStream.class));
+
+	}
+	
+	@Test
+	public void browseAndRetrieveComet() {
+		
+		repository.discover(CometAsset.type);
+		
+		Asset a = repository.iterator().next();
+		
+		assertNotNull(repository.retrieve(a,InputStream.class));
+
 	}
 }

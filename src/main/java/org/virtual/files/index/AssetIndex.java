@@ -1,4 +1,4 @@
-package org.virtual.files;
+package org.virtual.files.index;
 
 import java.util.HashSet;
 import java.util.Set;

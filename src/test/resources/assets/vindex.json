@@ -3,13 +3,44 @@
    "id" : "local", 
    "assets" : [
     {
-      "name" : "somename",
+      "name" : "somecsvcodelist",
       "type" : "csv/codelist",
       "path" : "csvcodelist.txt",
       "properties" : {
-        "codeColumn":1
+        "codeColumn":1,
+        "hasHeader": true
       }
-    } 
+     },
+	     {
+	      
+	      "name" : "somecsvasset",
+	      "type" : "csv/generic",
+	      "path" : "csvasset.txt",
+	      "properties" : {
+	        "hasHeader": true,
+	        "delimiter": ","
+           }
+       },
+      
+      {
+      
+	      "name" : "somesdmxcodelist",
+	      "type" : "sdmx/codelist",
+	      "path" : "sdmxlist.xml",
+	      "properties" : {
+	        "agency": "someagency"
+	      }
+      },
+      
+      {
+      
+          "name" : "somecometmapping",
+          "type" : "comet/generic",
+          "path" : "mapping.xml"
+      }
+    
+    
+   
    ]
    
 }
