@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.virtual.files.BaseProxy;
+import org.virtual.files.FileProxy;
 import org.virtual.files.Provider;
 import org.virtual.files.common.CommonProducers;
 import org.virtual.files.common.Utils;
@@ -44,7 +44,7 @@ public class ConfigurationProducers {
 				
 				Provider provider = providerFor($);
 				
-				BaseProxy proxy = new BaseProxy(provider);
+				FileProxy proxy = new FileProxy(provider);
 				
 				services.add(new RepositoryService($.name(),
 												  proxy,

@@ -1,46 +1,41 @@
 {
-  
-   "id" : "local", 
-   "assets" : [
-    {
-      "name" : "somecsvcodelist",
-      "type" : "csv/codelist",
-      "path" : "csvcodelist.txt",
-      "properties" : {
-        "codeColumn":1,
-        "hasHeader": true
-      }
-     },
-	     {
-	      
-	      "name" : "somecsvasset",
-	      "type" : "csv/generic",
-	      "path" : "csvasset.txt",
-	      "properties" : {
-	        "hasHeader": true,
-	        "delimiter": ","
-           }
-       },
-      
-      {
-      
-	      "name" : "somesdmxcodelist",
-	      "type" : "sdmx/codelist",
-	      "path" : "sdmxlist.xml",
-	      "properties" : {
-	        "agency": "someagency"
-	      }
-      },
-      
-      {
-      
-          "name" : "somecometmapping",
-          "type" : "comet/generic",
-          "path" : "mapping.xml" 
-      }
-    
-    
-   
-   ]
-   
+  "id" : "local",
+  "assets" : [ {
+    "name" : "somenew",
+    "type" : "csv/generic",
+    "path" : "somenew.asset",
+    "properties" : {
+      "prop" : "val",
+      "vfile_ created" : "2014-12-19T13:14:37.113",
+      "vfile_lastModified" : "2014-12-19T13:29:34.795"
+    }
+  }, {
+    "name" : "somesdmxcodelist",
+    "type" : "sdmx/codelist",
+    "path" : "sdmxlist.xml",
+    "properties" : {
+      "agency" : "someagency"
+    }
+  }, {
+    "name" : "somecsvasset",
+    "type" : "csv/generic",
+    "path" : "csvasset.txt",
+    "properties" : {
+      "hasHeader" : "true",
+      "delimiter" : ","
+    }
+  }, {
+    "name" : "somecsvcodelist",
+    "type" : "csv/codelist",
+    "path" : "csvcodelist.txt",
+    "properties" : {
+      "codeColumn" : "1",
+      "hasHeader" : "true"
+    }
+  }, {
+    "name" : "somecometmapping",
+    "type" : "comet/generic",
+    "path" : "mapping.xml",
+    "properties" : { }
+  } ]
 }

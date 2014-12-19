@@ -19,10 +19,10 @@ import org.virtualrepository.spi.Publisher;
 import org.virtualrepository.spi.ServiceProxy;
 import org.virtualrepository.spi.Transform;
 
-public class BaseProxy implements ServiceProxy {
+public class FileProxy implements ServiceProxy {
 
 	@NonNull @Getter
-	BaseBrowser browser;
+	FileBrowser browser;
 	
 	@Getter
 	List<Importer<?,?>> importers = new ArrayList<Importer<?,?>>();
@@ -31,23 +31,30 @@ public class BaseProxy implements ServiceProxy {
 	List<Publisher<?,?>> publishers = new ArrayList<Publisher<?,?>>();
 	
 	
-	public BaseProxy(Provider provider) {
+	public FileProxy(Provider provider) {
 		
-		this.browser = new BaseBrowser(provider);
+		this.browser = new FileBrowser(provider);
 		
-		BaseImporter base = new BaseImporter(provider);
+		FileImporter base = new FileImporter(provider);
 		
 		this.importers.addAll(asList(
 			base,
 			adapt(base, new ToTable<CsvAsset>()),
 			adapt(base, new ToTable<CsvCodelist>())
 		));
+		
+		FilePublisher basepub = new FilePublisher(provider);
+		
+		this.publishers.addAll(asList(
+			basepub
+		));
+		
 	}
 	
 
 	////////////////////////////////////////////////////////////////////////////////////// helpers
 	
-	<A extends Asset,O> Importer<A,O> adapt(BaseImporter base,Transform<A, InputStream, O> transform) {
+	<A extends Asset,O> Importer<A,O> adapt(FileImporter base,Transform<A, InputStream, O> transform) {
 		
 		@SuppressWarnings("all") //universal importer is safe to specialise
 		Importer<A,InputStream> safebase = (Importer) base;

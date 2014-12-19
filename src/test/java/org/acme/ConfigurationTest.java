@@ -4,13 +4,11 @@ import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static org.virtual.files.common.Utils.*;
 import static org.virtual.files.config.Configuration.*;
-import static org.virtual.files.config.LocalConfiguration.*;
-import static org.virtual.files.index.AssetEntry.*;
+import static org.virtual.files.index.AssetInfo.*;
 import static org.virtual.files.index.AssetIndex.*;
+import static org.virtual.files.local.LocalConfiguration.*;
 
 import java.util.HashSet;
-
-import javax.xml.namespace.QName;
 
 import org.junit.Test;
 import org.virtual.files.config.Configuration;
@@ -40,8 +38,8 @@ public class ConfigurationTest {
 		AssetIndex assets = index("someid")
 				.assets(new HashSet<>(asList(
 					
-						asset(new QName("file1"), CsvAsset.type.name(), "/some/path/file1.txt"),
-						asset(new QName("file1"), CsvAsset.type.name(), "/some/path/file2.txt")
+						info("file1", CsvAsset.type.name(), "/some/path/file1.txt"),
+						info("file1", CsvAsset.type.name(), "/some/path/file2.txt")
 				)));     
 		
 		assertEquals(assets,jsonRoundtrip(assets));

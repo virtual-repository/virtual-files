@@ -12,7 +12,10 @@ import java.util.regex.Pattern;
 
 import javax.xml.namespace.QName;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.virtual.files.index.AssetIndex;
+import org.virtualrepository.Asset;
 import org.virtualrepository.Properties;
 import org.virtualrepository.Property;
 
@@ -21,6 +24,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+
+@Slf4j
 public class Utils {
 	
 	
@@ -43,6 +48,31 @@ public class Utils {
 				return this;
 			}
 		};
+	}
+	
+	
+
+	public static String hint(Asset asset, String hint) {
+		return hintOr(asset,hint,null);
+	}
+	
+	public static String hintOr(Asset asset, String hint,String or) {
+	
+		Properties props = asset.properties();
+		
+		if (props.contains(hint)) {
+			
+			Property prop = props.lookup(hint);
+			
+			if (prop.is(String.class))
+				return prop.value(String.class);
+			
+			log.warn("ignoring hint in {}: not a string",hint,asset.name());
+			
+		}
+		
+		return or;
+		
 	}
 
 
@@ -246,7 +276,7 @@ public class Utils {
 		}
 		
 		static JsonNodeFactory factory = JsonNodeFactory.instance;
-		static ObjectMapper mapper = new ObjectMapper();
+		public static ObjectMapper mapper = new ObjectMapper();
 		
 		static {
 			
@@ -270,6 +300,7 @@ public class Utils {
 				throw unchecked("invalid assets file", e);
 			}
 		}
+		
 		
 		
 		public static ObjectNode toJson(Object o, boolean print) {

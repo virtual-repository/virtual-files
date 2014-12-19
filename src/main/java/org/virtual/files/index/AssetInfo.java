@@ -1,38 +1,42 @@
 package org.virtual.files.index;
 
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.namespace.QName;
-
-import org.virtualrepository.AssetType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import org.virtualrepository.AssetType;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
-@RequiredArgsConstructor(staticName="asset")
+@RequiredArgsConstructor(staticName="info")
 @NoArgsConstructor
-public class AssetEntry {
+public class AssetInfo {
 	
 
 	@NonNull @JsonProperty
-	private QName name;
+	private String name;
 	
 	@NonNull @JsonProperty
 	private String type;
 	
-	@JsonProperty
-	private Map<String,String> properties = new HashMap<String, String>();
-	
 	@NonNull @JsonProperty
 	private String path;
 	
+	@JsonProperty
+	private Map<String,String> properties = new HashMap<String, String>();
+
+	
+	public void validate() {
+		
+		info(name,type,path);
+	}
 	
 	public boolean hasOneof(Collection<? extends AssetType> types) {
 		

@@ -1,10 +1,12 @@
-package org.virtual.files.config;
+package org.virtual.files.local;
 
 import static lombok.AccessLevel.*;
 import static org.virtual.files.common.Constants.*;
 import static org.virtual.files.common.Utils.*;
 
 import java.io.File;
+
+import org.virtual.files.config.ServiceConfiguration;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

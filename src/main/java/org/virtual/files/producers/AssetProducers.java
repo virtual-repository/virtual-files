@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import org.virtual.files.index.AssetEntry;
+import org.virtual.files.index.AssetInfo;
 import org.virtualrepository.AssetType;
 import org.virtualrepository.comet.CometAsset;
 import org.virtualrepository.csv.CsvAsset;
@@ -24,7 +24,7 @@ public class AssetProducers {
 		final AssetType type;
 		
 		@Override
-		public boolean handles(AssetEntry asset) {
+		public boolean handles(AssetInfo asset) {
 			return type.name().equals(asset.type());
 		}
 	}
@@ -32,7 +32,7 @@ public class AssetProducers {
 	
 	public static AssetProducer<CsvCodelist> csvcodelistProducer = new BaseProducer<CsvCodelist>(CsvCodelist.type) {
 
-		public CsvCodelist transform(String id,AssetEntry entry) {
+		public CsvCodelist transform(String id,AssetInfo entry) {
 			
 			String code = entry.properties().get("codeColumn");
 
@@ -43,11 +43,14 @@ public class AssetProducers {
 			return configure(asset,entry);
 			
 		};
+		
+		
+		
 	};
 	
 	public static AssetProducer<CsvAsset> csvProducer = new BaseProducer<CsvAsset>(CsvAsset.type) {
 
-		public CsvAsset transform(String id,AssetEntry entry) {
+		public CsvAsset transform(String id,AssetInfo entry) {
 			
 			CsvAsset asset = new CsvAsset(id,entry.name().toString());
 			
@@ -59,7 +62,7 @@ public class AssetProducers {
 	
 	public static AssetProducer<SdmxCodelist> sdmxCodelistProducer = new BaseProducer<SdmxCodelist>(SdmxCodelist.type) {
 
-		public SdmxCodelist transform(String id,AssetEntry entry) {
+		public SdmxCodelist transform(String id,AssetInfo entry) {
 			
 			SdmxCodelist asset= new SdmxCodelist(get(entry,"urn"),id,get(entry,"version"),entry.name().toString()); 
 			
@@ -76,7 +79,7 @@ public class AssetProducers {
 	
 	public static AssetProducer<CometAsset> cometMappingProducer = new BaseProducer<CometAsset>(CometAsset.type) {
 
-		public CometAsset transform(String id,AssetEntry entry) {
+		public CometAsset transform(String id,AssetInfo entry) {
 			
 			CometAsset asset= new CometAsset(id,entry.name().toString()); 
 			
@@ -91,20 +94,16 @@ public class AssetProducers {
 
 	/////////////////////////////////////////////////////////////////////////////// helpers
 	
-	private static <T extends CsvAsset> T configure(T asset, AssetEntry entry) {
+	private static <T extends CsvAsset> T configure(T asset, AssetInfo entry) {
 		
-		String headerFlag = entry.properties().get("hasHeader");
+		asset.hasHeader(Boolean.valueOf(get(entry,"hasHeader","false")));
 		
-		boolean hasHeader = headerFlag == null ? false: Boolean.valueOf(headerFlag);
-		
-		asset.hasHeader(hasHeader);
-		
-		String encoding = entry.properties().get("encoding");
+		String encoding = get(entry,"encoding",null);
 		
 		if (encoding!=null)
 			asset.setEncoding(Charset.forName(encoding));
 		
-		String delimiter = entry.properties().get("delimiter");
+		String delimiter = get(entry,"delimiter",",");
 		
 		if (delimiter!=null && delimiter.length()==1)
 			asset.setDelimiter(delimiter.charAt(0));
@@ -113,12 +112,12 @@ public class AssetProducers {
 	}
 	
 		
-	private static String get(AssetEntry entry, String name) {
+	private static String get(AssetInfo entry, String name) {
 		
 		return get(entry,name,"unknown");
 	}
 
-	private static String get(AssetEntry entry, String name, String def) {
+	private static String get(AssetInfo entry, String name, String def) {
 		
 		String val = entry.properties().get(name);
 

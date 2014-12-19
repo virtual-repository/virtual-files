@@ -2,6 +2,7 @@ package org.acme;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import lombok.SneakyThrows;
@@ -9,6 +10,7 @@ import lombok.SneakyThrows;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.virtualrepository.Asset;
+import org.virtualrepository.Property;
 import org.virtualrepository.VirtualRepository;
 import org.virtualrepository.comet.CometAsset;
 import org.virtualrepository.csv.CsvAsset;
@@ -40,7 +42,24 @@ public class ApiTest {
 		
 		for (Row row : repository.retrieve(a,Table.class))
 			System.out.println(row);
+		
 	}
+	
+
+	@Test
+	public void publishCsvAsset() {
+		
+		Asset csvAsset = new CsvAsset("somenew", 
+									  repository.services().iterator().next(), 
+									  new Property("prop","val"));
+		
+		String content = "test";
+		
+		repository.publish(csvAsset, new ByteArrayInputStream(content.getBytes()));
+		
+		repository.discover();
+	}
+	
 	
 	@Test
 	public void browseAndRetrieveCsvCodelist() {

@@ -1,6 +1,7 @@
 package org.virtual.files.index;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import lombok.Data;
@@ -20,6 +21,14 @@ public class AssetIndex {
 	 private String id;
 	 
 	 @JsonProperty
-	 private Set<AssetEntry> assets = new HashSet<>();
+	 private Set<AssetInfo> assets = new HashSet<>();
+	 
+	 
+	 
+	public  Optional<AssetInfo> lookup(@NonNull String name) {
+		 
+		return assets.stream().filter($->name.equals($.name())).findFirst();
+	 }
+	 
 	 
 }

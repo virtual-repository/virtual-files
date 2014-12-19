@@ -7,7 +7,7 @@ import java.io.InputStream;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import org.virtual.files.index.AssetEntry;
+import org.virtual.files.index.AssetInfo;
 import org.virtualrepository.Asset;
 import org.virtualrepository.Properties;
 import org.virtualrepository.Property;
@@ -15,7 +15,7 @@ import org.virtualrepository.impl.Type;
 import org.virtualrepository.spi.Importer;
 
 @RequiredArgsConstructor
-public class BaseImporter implements Importer<Asset, InputStream> {
+public class FileImporter implements Importer<Asset, InputStream> {
 
 	//baseclasses know how/where to get the stream
 	@NonNull 
@@ -24,9 +24,9 @@ public class BaseImporter implements Importer<Asset, InputStream> {
 	@Override
 	public InputStream retrieve(Asset asset) throws Exception {
 		
-		AssetEntry entry = entryIn(asset);
+		AssetInfo entry = entryIn(asset);
 		
-		return provider.resolve(entry);
+		return provider.load(entry);
 	}
 	
 	
@@ -42,7 +42,7 @@ public class BaseImporter implements Importer<Asset, InputStream> {
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	AssetEntry entryIn(Asset asset) {
+	AssetInfo entryIn(Asset asset) {
 	
 		Properties props = asset.properties();
 		
@@ -51,10 +51,10 @@ public class BaseImporter implements Importer<Asset, InputStream> {
 		
 		Property property = props.lookup(index_entry_property);
 		
-		if (!property.is(AssetEntry.class))
+		if (!property.is(AssetInfo.class))
 			throw new IllegalArgumentException("invalid asset: unexpdcted value for property "+index_entry_property);
 		
-		return property.value(AssetEntry.class);
+		return property.value(AssetInfo.class);
 		
 	}
 }

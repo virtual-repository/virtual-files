@@ -1,7 +1,7 @@
 package org.virtual.files;
 
 import static org.virtual.files.Assets.*;
-import static org.virtual.files.index.AssetEntry.*;
+import static org.virtual.files.index.AssetInfo.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.virtual.files.index.AssetEntry;
+import org.virtual.files.index.AssetInfo;
 import org.virtual.files.index.AssetIndex;
 import org.virtualrepository.AssetType;
 import org.virtualrepository.spi.Browser;
@@ -19,7 +19,7 @@ import org.virtualrepository.spi.MutableAsset;
 
 @Slf4j
 @RequiredArgsConstructor
-public class BaseBrowser implements Browser {
+public class FileBrowser implements Browser {
 	
 	@NonNull
 	Provider provider;
@@ -31,7 +31,7 @@ public class BaseBrowser implements Browser {
 		
 		List<MutableAsset> assets = new ArrayList<>();
 		
-		for (AssetEntry $ : index.assets())
+		for (AssetInfo $ : index.assets())
 			
 			if ($.hasOneof(types))
 				
@@ -54,10 +54,10 @@ public class BaseBrowser implements Browser {
 	}
 	
 	
-	void validate(AssetEntry entry) {
+	void validate(AssetInfo entry) {
 		
 		//basic validation is by cloning
-		asset(entry.name(), entry.type(), entry.path());
+		info(entry.name(), entry.type(), entry.path());
 			
 		//delegate to subclasses
 		provider.validate(entry);

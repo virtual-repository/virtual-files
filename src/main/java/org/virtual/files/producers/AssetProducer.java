@@ -1,13 +1,13 @@
 package org.virtual.files.producers;
 
-import org.virtual.files.index.AssetEntry;
+import org.virtual.files.index.AssetInfo;
 import org.virtualrepository.spi.MutableAsset;
 
-public interface AssetProducer<T  extends MutableAsset> {
+public interface AssetProducer<A  extends MutableAsset> {
 
 	
-	boolean handles(AssetEntry asset);
+	boolean handles(AssetInfo asset);
 	
-	T transform(String id,AssetEntry asset); 
+	A transform(String id,AssetInfo asset); 
 	
 }

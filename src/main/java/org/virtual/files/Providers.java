@@ -1,7 +1,7 @@
 package org.virtual.files;
 
-import org.virtual.files.config.LocalConfiguration;
 import org.virtual.files.config.ServiceConfiguration;
+import org.virtual.files.local.LocalConfiguration;
 import org.virtual.files.local.LocalProvider;
 
 public class Providers {
