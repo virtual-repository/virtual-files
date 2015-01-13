@@ -152,7 +152,7 @@ public class LocalProvider implements Provider {
 			
 		}
 		catch(Exception e) {
-			throw unchecked("cannot load index file", e);
+			throw unchecked("cannot load index file (does it exists and contain json data?)", e);
 		}
 	}
 	
@@ -207,42 +207,47 @@ public class LocalProvider implements Provider {
 		
 			try {
 				
-				@Cleanup WatchService watcher = FileSystems.getDefault().newWatchService();
-	
-				Path indexpath = Paths.get(indexfile.getPath());
-				Path parentpath = indexpath.getParent();
-				
-				parentpath.register(watcher, ENTRY_MODIFY, ENTRY_CREATE);
-				
-				
-				
 				while (true) {
-	
-					WatchKey key = watcher.take();
-				   
-				    for (WatchEvent<?> event: key.pollEvents()) {
-				        
-				    	if (event.kind() == OVERFLOW)
-				            continue;
-				        
-				        @SuppressWarnings("all")
-				        WatchEvent<Path> ev = (WatchEvent) event;
-				        
-				       if (indexpath .equals(parentpath.resolve(ev.context()))) {
-				        
-				        	log.info("detected change to index for {}: reparsing",LocalProvider.this);
-						
-				        	index =parse(indexfile);
-				       }
-				       
+				
+					@Cleanup WatchService watcher = FileSystems.getDefault().newWatchService();
+					
+					Path indexpath = Paths.get(indexfile.getPath());
+					Path parentpath = indexpath.getParent();
+					
+					parentpath.register(watcher, ENTRY_MODIFY, ENTRY_CREATE);
+								
+					while (true) {
+		
+						WatchKey key = watcher.take();
+					   
+					    for (WatchEvent<?> event: key.pollEvents()) {
+					        
+					    	if (event.kind() == OVERFLOW)
+					            continue;
+					        
+					        @SuppressWarnings("all")
+					        WatchEvent<Path> ev = (WatchEvent) event;
+					        
+					       if (indexpath.equals(parentpath.resolve(ev.context()))) {
+					        
+					        	log.info("detected change to index for {}: reparsing",LocalProvider.this);
+							
+					        	index =parse(indexfile);
+					        	
+					        	break;
+					       }
+					       
+					    }
+					    
+					    
 				       boolean valid = key.reset();
 				       
-				       if (!valid)
+				       if (!valid) {
+				    	   log.error("watcher seems to be in an invalid state, trying to recreate it...");
 				           break;
-				       
-				    }
+				       }
 				 
-				
+					}
 				}
 				
 			}
